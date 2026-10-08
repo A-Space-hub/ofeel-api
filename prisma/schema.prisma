@@ -17,11 +17,24 @@ enum Role {
   ADMIN
 }
 
+enum WeightUnit {
+  KG
+  LB
+}
+
+model UserPreferences {
+  userId     String     @id
+  weightUnit WeightUnit @default(KG)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
 model User {
-  id           String   @id @default(uuid())
-  email        String   @unique
+  id           String           @id @default(uuid())
+  email        String           @unique
   passwordHash String
-  role         Role     @default(USER)
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  role         Role             @default(USER)
+  preferences  UserPreferences?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
 }
