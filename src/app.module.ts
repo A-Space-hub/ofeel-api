@@ -5,6 +5,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -12,7 +13,8 @@ import { PrismaModule } from './prisma/prisma.module';
       isGlobal: true, // évite d'importer ConfigModule dans chaque module de l'application.
     }),
     PrismaModule,
-    UsersModule, // initialise le module de configuration et permet à Nest de charger les variables depuis l'environnement et le fichier .env
+    UsersModule,
+    AuthModule, // initialise le module de configuration et permet à Nest de charger les variables depuis l'environnement et le fichier .env
   ],
   controllers: [AppController],
   providers: [AppService],
