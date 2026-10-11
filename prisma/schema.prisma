@@ -29,17 +29,6 @@ model UserPreferences {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
-model User {
-  id           String           @id @default(uuid())
-  email        String           @unique
-  passwordHash String
-  passwordResetTokens PasswordResetToken[]
-  role         Role             @default(USER)
-  preferences  UserPreferences?
-  createdAt    DateTime         @default(now())
-  updatedAt    DateTime         @updatedAt
-}
-
 model PasswordResetToken {
   id        String   @id @default(uuid())
   tokenHash String   @unique
@@ -50,4 +39,27 @@ model PasswordResetToken {
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
+}
+
+model Exercise {
+  id              String   @id @default(uuid())
+  name            String
+  description     String?
+  createdByUserId String
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
+
+  createdBy User @relation(fields: [createdByUserId], references: [id], onDelete: Restrict)
+}
+
+model User {
+  id                  String               @id @default(uuid())
+  email               String               @unique
+  passwordHash        String
+  passwordResetTokens PasswordResetToken[]
+  role                Role                 @default(USER)
+  preferences         UserPreferences?
+  createdExercises    Exercise[]
+  createdAt           DateTime             @default(now())
+  updatedAt           DateTime             @updatedAt
 }
