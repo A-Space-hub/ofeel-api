@@ -6,6 +6,7 @@ import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { PrismaModule } from './prisma/prisma.module';
 import { AuthModule } from './auth/auth.module';
+import { ExercisesModule } from './exercises/exercises.module';
 
 @Module({
   imports: [
@@ -14,7 +15,8 @@ import { AuthModule } from './auth/auth.module';
     }),
     PrismaModule,
     UsersModule,
-    AuthModule, // initialise le module de configuration et permet à Nest de charger les variables depuis l'environnement et le fichier .env
+    AuthModule,
+    ExercisesModule, // initialise le module de configuration et permet à Nest de charger les variables depuis l'environnement et le fichier .env
   ],
   controllers: [AppController],
   providers: [AppService],
