@@ -46,6 +46,7 @@ model Exercise {
   name            String
   description     String?
   createdByUserId String
+  performances    Performance[]
   createdAt       DateTime @default(now())
   updatedAt       DateTime @updatedAt
 
@@ -60,6 +61,25 @@ model User {
   role                Role                 @default(USER)
   preferences         UserPreferences?
   createdExercises    Exercise[]
+  performances        Performance[]
   createdAt           DateTime             @default(now())
   updatedAt           DateTime             @updatedAt
+}
+
+
+model Performance {
+  id          String     @id @default(uuid())
+  userId      String
+  exerciseId  String
+  value       Decimal    @db.Decimal(10, 2)
+  unit        WeightUnit
+  reps        Int
+  performedAt DateTime
+  createdAt   DateTime   @default(now())
+
+  user        User       @relation(fields: [userId], references: [id], onDelete: Cascade)
+  exercise    Exercise   @relation(fields: [exerciseId], references: [id], onDelete: Restrict)
+
+  @@index([userId, performedAt])
+  @@index([exerciseId])
 }
